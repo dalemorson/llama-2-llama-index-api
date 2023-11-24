@@ -102,14 +102,42 @@ response = requests.request("POST", url, headers=headers, data=payload)
 print(response.text)
 ```
 
-The response
+The response was:
+
+```text
+There were 10 failed password attempts in the log file.
+```
+
+Snippet of JSON response:
+```json
+{"answer":{"response":" There were 10 failed password attempts in the log file.","source_nodes":[{"node":{"id_":"b5223a47-5b13-462c-8755-3b9430d3d984","embedding":null,"metadata":{"file_path":"..\\storage\\OpenSSH_2k.log_structured.csv","file_name":"OpenSSH_2k.log_structured.csv","file_type":"text/csv","file_size":357677,"creation_date":"2023-11-24","last_modified_date":"2023-11-22","last_accessed_date":"2023-11-24"},"excluded_embed_metadata_keys":["file_name","file_type","file_size","creation_date","last_modified_date","last_accessed_date"],"excluded_llm_metadata_keys":["file_name","file_type","file_size","creation_date","last_modified_date","last_accessed_date"],"relationships":{"1":{"node_id":"8b2e22fe-2544-4d5d-99a8-eecdc86e31a4","node_type":"4","metadata":{"file_path":"..\\storage\\OpenSSH_2k.log_structured.csv","file_name":"OpenSSH_2k.log_structured.csv","file_type":"text/csv","file_size":357677,"creation_date":"2023-11-24","last_modified_date":"2023-11-22","last_accessed_date":"2023-11-24"},"hash":"a6256618596266c0bff3b825e045300cfbca908b591d5bbb65a484f3eb98284f"},"2":{"node_id":"77838434-3f21-460f-99ae-5971b79cf67f","node_type":"1","metadata":{"file_path":"..\\storage\\OpenSSH_2k.log_structured.csv","file_name":"OpenSSH_2k.log_structured.csv","file_type":"text/csv",
+```
+
+Response times:
+
+```text
+llama_print_timings:        load time =   10008.56 ms
+llama_print_timings:      sample time =       7.26 ms /    14 runs   (    0.52 ms per token,  1927.84 tokens per second)
+llama_print_timings: prompt eval time =  874970.77 ms /  1546 tokens (  565.96 ms per token,     1.77 tokens per second)
+llama_print_timings:        eval time =   11232.27 ms /    13 runs   (  864.02 ms per token,     1.16 tokens per second)
+llama_print_timings:       total time =  887042.66 ms
+```
 
 # CPU vs GPU Comparisons
 With a decent CPU but without any GPU assistance, expect output on the order of 1 token per second, and excruciatingly slow prompt ingestion. Any decent Nvidia GPU will dramatically speed up ingestion, but for fast generation, you need 48GB VRAM to fit the entire model. That means 2x RTX 3090 or better.
 
+## Time to load model and index 350kb CSV
+
 | Azure Virtual Machine Size      | CPU | GPU | Time to Response in ms |
 | ----------- | ----------- | ----------- | ----------- |
-| Standard_D4s_v4 | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | None | xxxx ms |
+| Standard_D4s_v4 | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | None | 600000 ms |
+| NC4as_T4_v3   | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | 16GB Nvidia Tesla T4 GPU | xxxx ms |
+
+## Time to respond to question
+
+| Azure Virtual Machine Size      | CPU | GPU | Time to Response in ms |
+| ----------- | ----------- | ----------- | ----------- |
+| Standard_D4s_v4 | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | None | 887042 ms |
 | NC4as_T4_v3   | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | 16GB Nvidia Tesla T4 GPU | xxxx ms |
 
 # Notes
