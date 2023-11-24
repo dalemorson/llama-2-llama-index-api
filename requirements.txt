@@ -1,0 +1,7 @@
+llama-cpp-python
+llama-cpp-python[server]
+llama-index
+fastapi
+uvicorn
+sentence-transformers
+langchain
