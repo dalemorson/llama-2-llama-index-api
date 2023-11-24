@@ -6,7 +6,7 @@ import json
 url = "http://localhost:8000/ask"
 
 payload = json.dumps({
-  "question": "What is Llama 2?"
+  "question": "Q: How many failed password attempts were there?"
 })
 headers = {
   'Content-Type': 'application/json'
