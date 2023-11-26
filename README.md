@@ -1,11 +1,25 @@
-# Llama 2 Security Insights API
+# :llama: Llama 2 Security Insights API
 An experimental self-hosted instance of Llama 2 for providing cyber security insights and context.
 
-## Architecture
 
-### LlamaIndex
+<!-- TOC -->
 
-**Why LlamaIndex?**
+- [:llama: Llama 2 Security Insights API](#llama-llama-2-security-insights-api)
+            - [How can LlamaIndex help?](#how-can-llamaindex-help)
+            - [Retrieval Augmented Generation RAG](#retrieval-augmented-generation-rag)
+        - [FastAPI](#fastapi)
+    - [Getting Started with the API](#getting-started-with-the-api)
+        - [Step 1: Install Pre-reqs on Windows](#step-1-install-pre-reqs-on-windows)
+        - [Step 2: Dump data into data folder](#step-2-dump-data-into-data-folder)
+        - [Step 3: Load API](#step-3-load-api)
+        - [Step 4: Call the API](#step-4-call-the-api)
+- [CPU vs GPU Comparisons](#cpu-vs-gpu-comparisons)
+    - [Time to load model and index 350kb CSV](#time-to-load-model-and-index-350kb-csv)
+    - [Time to respond to question](#time-to-respond-to-question)
+- [Associated projects:](#associated-projects)
+
+<!-- /TOC -->
+
 LLMs offer a natural language interface between humans and data. Widely available models come pre-trained on huge amounts of publicly available data like Wikipedia, mailing lists, textbooks, source code and more.
 
 However, while LLMs are trained on a great deal of data, they are not trained on your data, which may be private or specific to the problem you’re trying to solve. It’s behind APIs, in SQL databases, or trapped in PDFs and slide decks.
@@ -14,7 +28,7 @@ LlamaIndex solves this problem by connecting to these data sources and adding yo
 
 Read about the high level concepts of LlamaIndex [here](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html)
 
-**How can LlamaIndex help?**
+#### How can LlamaIndex help?
 LlamaIndex provides the following tools:
 
 - Data connectors ingest your existing data from their native source and format. These could be APIs, PDFs, SQL, and (much) more.
@@ -27,6 +41,28 @@ LlamaIndex provides the following tools:
 
 - Application integrations tie LlamaIndex back into the rest of your ecosystem. This could be LangChain, Flask, Docker, ChatGPT, or… anything else!
 
+#### Retrieval Augmented Generation (RAG)
+
+LLMs are trained on enormous bodies of data but they aren’t trained on your data. Retrieval-Augmented Generation (RAG) solves this problem by adding your data to the data LLMs already have access to. You will see references to RAG frequently in this documentation.
+
+In RAG, your data is loaded and prepared for queries or “indexed”. User queries act on the index, which filters your data down to the most relevant context. This context and your query then go to the LLM along with a prompt, and the LLM provides a response.
+
+Even if what you’re building is a chatbot or an agent, you’ll want to know RAG techniques for getting data into your application.
+
+![alt text](https://docs.llamaindex.ai/en/stable/_images/basic_rag.png "RAG")
+
+**Stages within RAG**
+
+There are five key stages within RAG, which in turn will be a part of any larger application you build. These are:
+
+- **Loading:** this refers to getting your data from where it lives – whether it’s text files, PDFs, another website, a database, or an API – into your pipeline. LlamaHub provides hundreds of connectors to choose from.
+- **Indexing:** this means creating a data structure that allows for querying the data. For LLMs this nearly always means creating vector embeddings, numerical representations of the meaning of your data, as well as numerous other metadata strategies to make it easy to accurately find contextually relevant data
+- **Storing:** once your data is indexed you will almost always want to store your index, as well as other metadata, to avoid having to re-index it.
+- **Querying:** for any given indexing strategy there are many ways you can utilize LLMs and LlamaIndex data structures to query, including sub-queries, multi-step queries and hybrid strategies.
+- **Evaluation:** a critical step in any pipeline is checking how effective it is relative to other strategies, or when you make changes. Evaluation provides objective measures of how accurate, faithful and fast your responses to queries are.
+
+Read more [here](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html).
+
 ### FastAPI
 
 **Why FastAPI?**
@@ -35,18 +71,18 @@ FastAPI is a modern, fast (high-performance), web framework for building APIs wi
 
 The key features are:
 
-- Fast: Very high performance, on par with NodeJS and Go (thanks to Starlette and Pydantic). One of the fastest Python frameworks available.
-- Fast to code: Increase the speed to develop features by about 200% to 300%. *
-- Fewer bugs: Reduce about 40% of human (developer) induced errors. *
-- Intuitive: Great editor support. Completion everywhere. Less time debugging.
-- Easy: Designed to be easy to use and learn. Less time reading docs.
-- Short: Minimize code duplication. Multiple features from each parameter declaration. Fewer bugs.
-- Robust: Get production-ready code. With automatic interactive documentation.
-- Standards-based: Based on (and fully compatible with) the open standards for APIs: OpenAPI (previously known as Swagger) and JSON Schema.
+- **Fast:** Very high performance, on par with NodeJS and Go (thanks to Starlette and Pydantic). One of the fastest Python frameworks available.
+- **Fast to code:** Increase the speed to develop features by about 200% to 300%. *
+- **Fewer bugs:** Reduce about 40% of human (developer) induced errors. *
+- **Intuitive:** Great editor support. Completion everywhere. Less time debugging.
+- **Easy:** Designed to be easy to use and learn. Less time reading docs.
+- **Short:** Minimize code duplication. Multiple features from each parameter declaration. Fewer bugs.
+- **Robust:** Get production-ready code. With automatic interactive documentation.
+- **Standards-based:** Based on (and fully compatible with) the open standards for APIs: OpenAPI (previously known as Swagger) and JSON Schema.
 
 ## Getting Started with the API
 
-### Step 1: Install Pre-reqs
+### Step 1: Install Pre-reqs on Windows
 
 - Install the latest version of Python from [python.org](https://www.python.org/) or your favourite package manager
 
@@ -139,11 +175,6 @@ With a decent CPU but without any GPU assistance, expect output on the order of 
 | ----------- | ----------- | ----------- | ----------- |
 | Standard_D4s_v4 | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | None | 887042 ms |
 | NC4as_T4_v3   | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | 16GB Nvidia Tesla T4 GPU | xxxx ms |
-
-# Notes
-
-* [ ] The CSV file is loaded and indexed at startup. Can I load new data in dynamically without having to reload the app?
-* [ ] Performance loading the model of a single 350kb CSV is slow (10+ minutes) on 4vCPU and 16GB.
 
 # Associated projects:
 
