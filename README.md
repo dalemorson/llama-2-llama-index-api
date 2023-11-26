@@ -1,10 +1,14 @@
-# :llama: Llama 2 Security Insights API
+# Llama 2 Security Insights API
 An experimental self-hosted instance of Llama 2 for providing cyber security insights and context.
 
 
 <!-- TOC -->
 
-- [:llama: Llama 2 Security Insights API](#llama-llama-2-security-insights-api)
+- [Llama 2 Security Insights API](#llama-2-security-insights-api)
+    - [Architecture](#architecture)
+        - [Llama 2](#llama-2)
+            - [Why Llama 2?](#why-llama-2)
+        - [LlamaIndex](#llamaindex)
             - [How can LlamaIndex help?](#how-can-llamaindex-help)
             - [Retrieval Augmented Generation RAG](#retrieval-augmented-generation-rag)
         - [FastAPI](#fastapi)
@@ -14,11 +18,28 @@ An experimental self-hosted instance of Llama 2 for providing cyber security ins
         - [Step 3: Load API](#step-3-load-api)
         - [Step 4: Call the API](#step-4-call-the-api)
 - [CPU vs GPU Comparisons](#cpu-vs-gpu-comparisons)
-    - [Time to load model and index 350kb CSV](#time-to-load-model-and-index-350kb-csv)
-    - [Time to respond to question](#time-to-respond-to-question)
-- [Associated projects:](#associated-projects)
+    - [Time to Load Model](#time-to-load-model)
+    - [Response Times to Question](#response-times-to-question)
+- [Associated Projects](#associated-projects)
 
 <!-- /TOC -->
+
+## Architecture
+
+- **Llama 2** - Large language model for next generation open source natural language generation tasks.
+- **LlamaIndex** - LLMs offer a natural language interface between humans and data. Widely available models come pre-trained on huge amounts of publicly available data like Wikipedia, mailing lists, textbooks, source code and more.
+- **Retrieval Augmented Generation (RAG)** - LLMs are trained on enormous bodies of data but they aren’t trained on your data. Retrieval-Augmented Generation (RAG) solves this problem by adding your data to the data LLMs already have access to. You will see references to RAG frequently in this documentation.
+- **Fast API** - FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.
+
+### Llama 2
+
+#### Why Llama 2?
+
+Llama 2 is Meta's open source large language model (LLM). It's basically the Facebook parent company's response to OpenAI's GPT models and Google's AI models like PaLM 2—but with one key difference: it's freely available for almost anyone to use for research and commercial purposes.
+
+Meta have a great [Getting Started](https://ai.meta.com/llama/get-started/) page as well as a [Getting to Know LLama](https://github.com/facebookresearch/llama-recipes/blob/main/examples/Getting_to_know_Llama.ipynb) Juypter book.
+
+### LlamaIndex
 
 LLMs offer a natural language interface between humans and data. Widely available models come pre-trained on huge amounts of publicly available data like Wikipedia, mailing lists, textbooks, source code and more.
 
@@ -162,21 +183,21 @@ llama_print_timings:       total time =  887042.66 ms
 # CPU vs GPU Comparisons
 With a decent CPU but without any GPU assistance, expect output on the order of 1 token per second, and excruciatingly slow prompt ingestion. Any decent Nvidia GPU will dramatically speed up ingestion, but for fast generation, you need 48GB VRAM to fit the entire model. That means 2x RTX 3090 or better.
 
-## Time to load model and index 350kb CSV
+## Time to Load Model
 
 | Azure Virtual Machine Size      | CPU | GPU | Time to Response in ms |
 | ----------- | ----------- | ----------- | ----------- |
 | Standard_D4s_v4 | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | None | 600000 ms |
 | NC4as_T4_v3   | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | 16GB Nvidia Tesla T4 GPU | xxxx ms |
 
-## Time to respond to question
+## Response Times to Question
 
 | Azure Virtual Machine Size      | CPU | GPU | Time to Response in ms |
 | ----------- | ----------- | ----------- | ----------- |
 | Standard_D4s_v4 | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | None | 887042 ms |
 | NC4as_T4_v3   | Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz | 16GB Nvidia Tesla T4 GPU | xxxx ms |
 
-# Associated projects:
+# Associated Projects
 
 - 🏡 LlamaHub: https://llamahub.ai | A large (and growing!) collection of custom data connectors
 - 🧪 LlamaLab: https://github.com/run-llama/llama-lab | Ambitious projects built on top of LlamaIndex
