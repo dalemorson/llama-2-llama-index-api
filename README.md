@@ -1,6 +1,12 @@
 # Llama 2 Llama Index API
-An experimental self-hosted instance of Llama 2 using LlamaIndex for providing cyber security insights and context.
+An experimental self-hosted instance of Llama 2 using LlamaIndex for providing cyber security insights and context. 
 
+---
+**NOTE**
+
+Discovered that using the LlamaIndex persist to disk requires a local embedding model but still requires internet access and an OpenAPI token and auth to HuggableFace.
+
+---
 
 <!-- TOC -->
 
