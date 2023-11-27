@@ -6,6 +6,8 @@ An experimental self-hosted instance of Llama 2 using LlamaIndex for providing c
 
 Discovered that using the LlamaIndex persist to disk requires a local embedding model but still requires internet access and an OpenAPI token and auth to HuggableFace.
 
+Embeddings are used in LlamaIndex to represent your documents using a sophisticated numerical representation. Embedding models take text as input, and return a long list of numbers used to capture the semantics of the text.
+
 ---
 
 <!-- TOC -->
