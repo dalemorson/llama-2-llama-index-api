@@ -1,5 +1,5 @@
-# Llama 2 Security Insights API
-An experimental self-hosted instance of Llama 2 for providing cyber security insights and context.
+# Llama 2 Llama Index API
+An experimental self-hosted instance of Llama 2 using LlamaIndex for providing cyber security insights and context.
 
 
 <!-- TOC -->
